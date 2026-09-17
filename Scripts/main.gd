@@ -17,6 +17,6 @@ func toggle_pause():
 	tree.paused = !tree.paused
 	
 	if tree.paused:
-		$Pausable/Game.text = "Pause"
+		$Pausable/Control/Game.text = "Pause"
 	else:
-		$Pausable/Game.text = "Playing"
+		$Pausable/Control/Game.text = "Playing"
