@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://bnmgtabw1c14p" path="res://Scenes/level.tscn" id="2_bo1nx"]
 [ext_resource type="Texture2D" uid="uid://b7x5cgd2jichd" path="res://Sprites/map_tiles.png" id="4_jjvhh"]
 [ext_resource type="PackedScene" uid="uid://beri8cfmweo7m" path="res://Scenes/player.tscn" id="4_kry3j"]
+[ext_resource type="PackedScene" uid="uid://dj16m7ewub4jf" path="res://Scenes/enemy.tscn" id="5_kry3j"]
+[ext_resource type="Script" uid="uid://dk01xqyffyyse" path="res://Scripts/move.gd" id="6_21xkr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kry3j"]
 texture = ExtResource("4_jjvhh")
@@ -29,11 +31,20 @@ terrain_set_0/terrain_0/name = "Terrain 0"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 custom_data_layer_0/name = "destructible"
 custom_data_layer_0/type = 1
-custom_data_layer_1/name = "obstable"
+custom_data_layer_1/name = "obstacle"
 custom_data_layer_1/type = 1
 sources/1 = SubResource("TileSetAtlasSource_kry3j")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ig7tw"]
+
+[sub_resource type="Resource" id="Resource_21xkr"]
+script = ExtResource("6_21xkr")
+metadata/_custom_type_script = "uid://dk01xqyffyyse"
+
+[sub_resource type="Resource" id="Resource_6bp64"]
+script = ExtResource("6_21xkr")
+speed = 20
+metadata/_custom_type_script = "uid://dk01xqyffyyse"
 
 [node name="Main" type="Area2D" unique_id=878030459]
 process_mode = 3
@@ -74,3 +85,8 @@ position_smoothing_enabled = true
 
 [node name="Player" parent="." unique_id=340718104 instance=ExtResource("4_kry3j")]
 position = Vector2(88, 24)
+move = SubResource("Resource_21xkr")
+
+[node name="Enemy" parent="." unique_id=243479731 instance=ExtResource("5_kry3j")]
+position = Vector2(312, 120)
+move = SubResource("Resource_6bp64")
