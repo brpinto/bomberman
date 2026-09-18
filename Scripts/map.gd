@@ -33,10 +33,7 @@ func _ready():
 func is_solid(player_pos: Vector2i) -> bool:
 	for cell in map.get_used_cells():
 		if cell == player_pos:
-			print("cell: ", cell)
-			print("player_pos: ", player_pos)
 			var data = map.get_cell_tile_data(cell)
-			print(data.get_custom_data("obstacle"))
 			if data and data.get_custom_data("obstacle"):
 				return true
 	return false

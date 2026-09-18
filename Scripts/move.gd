@@ -2,7 +2,6 @@ extends Resource
 class_name Move
 
 @export var speed: int = 50
-
 var animated_sprite: AnimatedSprite2D
 var target: CharacterBody2D
 

@@ -15,26 +15,27 @@ func _ready() -> void:
 	
 func _process(delta: float) -> void:
 	var direction: int
+	
+	#if map.is_solid(cell_pos):
+		#return
+	#else:
 	if Input.is_action_pressed("ui_left"):
 		direction = -1
-		move.move_h(delta, direction)
 		raycast.target_position = Vector2(direction * TILE_SIZE, 0)
+		var cell_pos = floor((self.global_position + raycast.target_position) / 16)
+		move.move_h(delta, direction)
 	if Input.is_action_pressed("ui_right"):
 		direction = 1
-		move.move_h(delta, direction)
 		raycast.target_position = Vector2(direction * TILE_SIZE, 0)
+		var cell_pos = floor((self.global_position + raycast.target_position) / 16)
+		move.move_h(delta, direction)
 	if Input.is_action_pressed("ui_down"):
 		direction = 1
-		move.move_v(delta, direction)
 		raycast.target_position = Vector2(0, direction * TILE_SIZE)
+		var cell_pos = floor((self.global_position + raycast.target_position) / 16)
+		move.move_v(delta, direction)
 	if Input.is_action_pressed("ui_up"):
 		direction = -1
-		move.move_v(delta, direction)
 		raycast.target_position = Vector2(0, direction * TILE_SIZE)
-	
-	if raycast.is_colliding():
-		var player_pos = floor(self.global_position / 16)
-		var collider = raycast.get_collider()
-		print("is_solid: ", map.is_solid(player_pos))
-		print(collider)
-		
+		var cell_pos = floor((self.global_position + raycast.target_position) / 16)
+		move.move_v(delta, direction)

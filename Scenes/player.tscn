@@ -78,4 +78,5 @@ animation = &"walk_side"
 shape = SubResource("RectangleShape2D_x3wgy")
 
 [node name="RayCast2D" type="RayCast2D" parent="." unique_id=1297067744]
-target_position = Vector2(16, 0)
+target_position = Vector2(-17, 0)
+collide_with_areas = true
