@@ -3,19 +3,18 @@
 [ext_resource type="Texture2D" uid="uid://8uvn0js5qyad" path="res://Sprites/player-left-01.png" id="1_6t5aa"]
 [ext_resource type="Script" uid="uid://o8v10qp6p5db" path="res://Scripts/player.gd" id="1_vgqql"]
 [ext_resource type="Texture2D" uid="uid://bwhfjlaph5n2m" path="res://Sprites/walk-down-01.png" id="2_3smsa"]
-[ext_resource type="Resource" uid="uid://dwg7irpr8swqe" path="res://Resources/move.tres" id="2_gymyn"]
+[ext_resource type="Script" uid="uid://dk01xqyffyyse" path="res://Scripts/move.gd" id="2_pu2lt"]
 [ext_resource type="Texture2D" uid="uid://ch4ql37rehd56" path="res://Sprites/player-left-02.png" id="2_vgqql"]
 [ext_resource type="Texture2D" uid="uid://d3gqm75sn25h1" path="res://Sprites/walk-down-02.png" id="3_8erm5"]
 [ext_resource type="Texture2D" uid="uid://7n62j6ekbisd" path="res://Sprites/player-left-03.png" id="3_fkybt"]
-[ext_resource type="Script" uid="uid://d0vnllk50pssw" path="res://Scripts/map.gd" id="3_pu2lt"]
 [ext_resource type="Texture2D" uid="uid://gokjuaguqc6o" path="res://Sprites/walk-down-03.png" id="4_f1ek2"]
 [ext_resource type="Texture2D" uid="uid://cvrjls4b7o2vu" path="res://Sprites/walk-up-01.png" id="8_tx1dd"]
 [ext_resource type="Texture2D" uid="uid://pqotyte0fhtp" path="res://Sprites/walk-up-02.png" id="9_gymyn"]
 [ext_resource type="Texture2D" uid="uid://bqvsk8u21drve" path="res://Sprites/walk-up-03.png" id="10_pu2lt"]
 
-[sub_resource type="Resource" id="Resource_gymyn"]
-script = ExtResource("3_pu2lt")
-metadata/_custom_type_script = "uid://d0vnllk50pssw"
+[sub_resource type="Resource" id="Resource_ukyrk"]
+script = ExtResource("2_pu2lt")
+metadata/_custom_type_script = "uid://dk01xqyffyyse"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0yhpk"]
 animations = [{
@@ -67,8 +66,7 @@ size = Vector2(16, 16)
 
 [node name="Player" type="CharacterBody2D" unique_id=564091004]
 script = ExtResource("1_vgqql")
-move = ExtResource("2_gymyn")
-map = SubResource("Resource_gymyn")
+move = SubResource("Resource_ukyrk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1835056720]
 sprite_frames = SubResource("SpriteFrames_0yhpk")
@@ -78,5 +76,5 @@ animation = &"walk_side"
 shape = SubResource("RectangleShape2D_x3wgy")
 
 [node name="RayCast2D" type="RayCast2D" parent="." unique_id=1297067744]
-target_position = Vector2(-17, 0)
+target_position = Vector2(-9, 0)
 collide_with_areas = true
