@@ -55,3 +55,6 @@ func move_v(delta, direction):
 	var cell_pos: Vector2i = floor((target.global_position + Vector2(0, 8 * direction)) / 16)
 	if not is_solid(cell_pos):
 		target.position.y += direction * delta * speed
+		
+func move(delta, direction):
+	print("move")
