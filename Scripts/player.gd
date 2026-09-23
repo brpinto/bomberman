@@ -11,23 +11,16 @@ func _ready() -> void:
 	move.map = get_tree().current_scene.get_node("Level")
 	
 func _process(delta: float) -> void:
-	pass
-	#move.move(delta, direction)
-
-func _unhandled_key_input(event: InputEvent) -> void:
-	var delta = get_process_delta_time()
-	if event:
-		var direction: int
-		if event.is_action("ui_left"):
-			direction = -1
-			move.move_h(delta, direction)
-		if event.is_action("ui_right"):
-			direction = 1
-			move.move_h(delta, direction)
-		if event.is_action("ui_down"):
-			direction = 1
-			move.move_v(delta, direction)
-		if event.is_action("ui_up"):
-			direction = -1
-			move.move_v(delta, direction)
-		move.move(delta, direction)
+	var direction: int
+	if Input.is_action_pressed("ui_left"):
+		direction = -1
+		move.move_h(delta, direction)
+	if Input.is_action_pressed("ui_right"):
+		direction = 1
+		move.move_h(delta, direction)
+	if Input.is_action_pressed("ui_down"):
+		direction = 1
+		move.move_v(delta, direction)
+	if Input.is_action_pressed("ui_up"):
+		direction = -1
+		move.move_v(delta, direction)

@@ -31,10 +31,8 @@ func _process(delta: float) -> void:
 			cell_pos = floor((self.global_position + directions[prout[i]]) / 16)
 			if not move.is_solid(cell_pos):
 				free.append(i)
-		print(free)
 	
 	if free.size() > 0:
-		print(free.size() - 1)
 		var new_dir = free[randi_range(0, free.size() - 1)]
 		curr_dir = prout[new_dir]
 	
