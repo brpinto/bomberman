@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var move: Move
+var raycast: RayCast2D
 
 var directions: Array = [
 	Vector2(0, -8),
@@ -22,7 +23,8 @@ func _ready() -> void:
 	move.target = self
 	move.animated_sprite = $AnimatedSprite2D
 	move.map = get_tree().current_scene.get_node("Level")
-
+	raycast = $RayCast2D
+	
 func _process(delta: float) -> void:
 	var free: Array = []
 	var cell_pos: Vector2i = floor((self.global_position + directions[curr_dir]) / 16)
@@ -37,10 +39,14 @@ func _process(delta: float) -> void:
 		curr_dir = prout[new_dir]
 	
 	if curr_dir == prout.LEFT:
+		raycast.target_position = Vector2(-9, 0)
 		move.move_h(delta, -1)
 	elif curr_dir == prout.RIGHT:
+		raycast.target_position = Vector2(9, 0)
 		move.move_h(delta, 1)
 	elif curr_dir == prout.UP:
+		raycast.target_position = Vector2(0, -9)
 		move.move_v(delta, -1)
 	else:
+		raycast.target_position = Vector2(0, 9)
 		move.move_v(delta, 1)

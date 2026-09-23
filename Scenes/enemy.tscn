@@ -68,3 +68,7 @@ animation = &"walk_up"
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=1531294215]
 shape = SubResource("RectangleShape2D_0yhpk")
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=1128100360]
+target_position = Vector2(-9, 0)
+collide_with_areas = true

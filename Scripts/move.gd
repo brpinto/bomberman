@@ -43,7 +43,7 @@ func move_h(delta, direction):
 		animated_sprite.flip_h = true
 
 	var cell_pos: Vector2i = floor((target.global_position + Vector2(8 * direction, 0)) / 16)
-	if not is_solid(cell_pos):
+	if not is_solid(cell_pos) and not target.raycast.is_colliding():
 		target.position.x += direction * delta * speed
 
 func move_v(delta, direction):
@@ -53,5 +53,5 @@ func move_v(delta, direction):
 		animated_sprite.play("walk_down")
 		
 	var cell_pos: Vector2i = floor((target.global_position + Vector2(0, 8 * direction)) / 16)
-	if not is_solid(cell_pos):
+	if not is_solid(cell_pos) and not target.raycast.is_colliding():
 		target.position.y += direction * delta * speed

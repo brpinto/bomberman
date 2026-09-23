@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://dlkouw8n3gafh"]
+
+[ext_resource type="Texture2D" uid="uid://deq54mnv0al34" path="res://Sprites/exploding-01.png" id="1_2fiif"]
+[ext_resource type="Script" uid="uid://dwi6fctubduqi" path="res://Scripts/bomb.gd" id="1_60xmw"]
+[ext_resource type="Texture2D" uid="uid://mvmub5n5en4d" path="res://Sprites/exploding-02.png" id="2_60xmw"]
+[ext_resource type="Script" uid="uid://bi1isaak8q0n" path="res://Scripts/bomb_res.gd" id="2_l8kb1"]
+[ext_resource type="Texture2D" uid="uid://c8qldeinrd6f1" path="res://Sprites/exploding-03.png" id="3_l8kb1"]
+
+[sub_resource type="Resource" id="Resource_sppw0"]
+script = ExtResource("2_l8kb1")
+metadata/_custom_type_script = "uid://bi1isaak8q0n"
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aiqvf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_2fiif")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_60xmw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_l8kb1")
+}],
+"loop": 1,
+"name": &"exploding",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l8kb1"]
+size = Vector2(16, 16)
+
+[node name="Bomb" type="Area2D" unique_id=2131350542]
+script = ExtResource("1_60xmw")
+bomb = SubResource("Resource_sppw0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=485068068]
+sprite_frames = SubResource("SpriteFrames_aiqvf")
+animation = &"exploding"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1741395709]
+shape = SubResource("RectangleShape2D_l8kb1")

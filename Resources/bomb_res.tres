@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Bomb" format=3 uid="uid://dq1v6ijxx2g7w"]
+
+[ext_resource type="Script" uid="uid://bi1isaak8q0n" path="res://Scripts/bomb_res.gd" id="1_t242p"]
+
+[resource]
+script = ExtResource("1_t242p")
+metadata/_custom_type_script = "uid://bi1isaak8q0n"
