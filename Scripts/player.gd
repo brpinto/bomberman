@@ -44,5 +44,4 @@ func _on_bomb_timer_timeout() -> void:
 func put_bomb(pos: Vector2):
 	var bomb_instance = bomb.bomb.instantiate()
 	bomb_instance.global_position = (floor(pos / 16) * 16) + Vector2(8, 8)
-	get_tree().current_scene.add_child(bomb_instance)
-	pass
+	get_tree().current_scene.add_child(bomb_instance) 

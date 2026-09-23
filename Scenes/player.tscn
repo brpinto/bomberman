@@ -86,7 +86,7 @@ target_position = Vector2(-9, 0)
 collide_with_areas = true
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1789389453]
-zoom = Vector2(3.5, 3.5)
+zoom = Vector2(2, 2)
 process_callback = 0
 limit_left = 0
 limit_top = 0
@@ -96,6 +96,6 @@ limit_smoothed = true
 position_smoothing_enabled = true
 
 [node name="BombTimer" type="Timer" parent="." unique_id=1828819600]
-wait_time = 5.0
+wait_time = 4.0
 
 [connection signal="timeout" from="BombTimer" to="." method="_on_bomb_timer_timeout"]
