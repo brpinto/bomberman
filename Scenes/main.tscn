@@ -88,5 +88,5 @@ position = Vector2(88, 24)
 move = SubResource("Resource_21xkr")
 
 [node name="Enemy" parent="." unique_id=243479731 instance=ExtResource("5_kry3j")]
-position = Vector2(312, 120)
+position = Vector2(104, 120)
 move = SubResource("Resource_6bp64")
