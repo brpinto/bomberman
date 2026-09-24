@@ -3,6 +3,8 @@ extends CharacterBody2D
 @export var move: Move
 @export var bomb: Bomb
 
+signal exploded
+
 var can_put_bomb: bool = true
 const TILE_SIZE = 16
 var raycast: RayCast2D
@@ -37,11 +39,11 @@ func _process(delta: float) -> void:
 			can_put_bomb = false
 			$BombTimer.start()
 
-
 func _on_bomb_timer_timeout() -> void:
 	can_put_bomb = true
-	
+	exploded.emit()
+
 func put_bomb(pos: Vector2):
 	var bomb_instance = bomb.bomb.instantiate()
 	bomb_instance.global_position = (floor(pos / 16) * 16) + Vector2(8, 8)
-	get_tree().current_scene.add_child(bomb_instance) 
+	get_tree().current_scene.add_child(bomb_instance)
