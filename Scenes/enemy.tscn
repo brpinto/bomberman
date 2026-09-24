@@ -5,6 +5,12 @@
 [ext_resource type="Texture2D" uid="uid://cjy8nacrv7djw" path="res://Sprites/valcom-walk-side-03.png" id="2_287tu"]
 [ext_resource type="Script" uid="uid://dk01xqyffyyse" path="res://Scripts/move.gd" id="2_0830c"]
 [ext_resource type="Texture2D" uid="uid://beo6mgxbjsjb0" path="res://Sprites/valcom-walk-side-02.png" id="3_0830c"]
+[ext_resource type="Texture2D" uid="uid://htsct5t5gpss" path="res://Sprites/valdeath-01.png" id="3_po0sg"]
+[ext_resource type="Texture2D" uid="uid://b5275gdcrbc5a" path="res://Sprites/valdeath-02.png" id="4_haro7"]
+[ext_resource type="Texture2D" uid="uid://dcuyjff8xa10x" path="res://Sprites/valdeath-03.png" id="5_56vhr"]
+[ext_resource type="Texture2D" uid="uid://dk27vki0grxh5" path="res://Sprites/valdeath-04.png" id="6_ta2yt"]
+[ext_resource type="Texture2D" uid="uid://d3wrvmcsjqp6g" path="res://Sprites/valdeath-05.png" id="7_m4x7e"]
+[ext_resource type="Texture2D" uid="uid://cylo6a37n7pj2" path="res://Sprites/empty.png" id="8_haro7"]
 
 [sub_resource type="Resource" id="Resource_ghaa6"]
 script = ExtResource("2_0830c")
@@ -12,6 +18,29 @@ metadata/_custom_type_script = "uid://dk01xqyffyyse"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0lc47"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_po0sg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_haro7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_56vhr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ta2yt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_m4x7e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_haro7")
+}],
+"loop": 0,
+"name": &"death",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_afpow")
@@ -64,7 +93,7 @@ move = SubResource("Resource_ghaa6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1673802287]
 sprite_frames = SubResource("SpriteFrames_0lc47")
-animation = &"walk_up"
+animation = &"death"
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=1531294215]
 shape = SubResource("RectangleShape2D_0yhpk")
@@ -72,3 +101,5 @@ shape = SubResource("RectangleShape2D_0yhpk")
 [node name="RayCast2D" type="RayCast2D" parent="." unique_id=1128100360]
 target_position = Vector2(-9, 0)
 collide_with_areas = true
+
+[connection signal="dead" from="." to="." method="_on_death"]

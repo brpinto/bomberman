@@ -1,7 +1,12 @@
 extends CharacterBody2D
 
 @export var move: Move
+
+signal dead
+
 var raycast: RayCast2D
+var destructibles: TileMapLayer
+var can_move = true
 
 var directions: Array = [
 	Vector2(0, -9),
@@ -24,8 +29,11 @@ func _ready() -> void:
 	move.animated_sprite = $AnimatedSprite2D
 	move.map = get_tree().current_scene.get_node("Level")
 	raycast = $RayCast2D
+	destructibles = get_tree().current_scene.get_node("Map/Destructibles")
 	
 func _process(delta: float) -> void:
+	if not can_move:
+		return
 	var free: Array = []
 	var cell_pos: Vector2i = floor((self.global_position + directions[curr_dir]) / 16)
 	raycast.target_position = directions[curr_dir]
@@ -49,3 +57,17 @@ func _process(delta: float) -> void:
 		move.move_v(delta, -1)
 	else:
 		move.move_v(delta, 1)
+
+	var map_pos = destructibles.local_to_map(global_position)
+	var tile_data = destructibles.get_cell_tile_data(map_pos)
+	if tile_data:
+		if tile_data.get_custom_data("explosion"):
+			dead.emit()
+
+
+func _on_death() -> void:
+	can_move = false
+	$AnimatedSprite2D.stop()
+	$AnimatedSprite2D.play("death")
+	await get_tree().create_timer(5.0).timeout
+	self.process_mode = Node.PROCESS_MODE_DISABLED

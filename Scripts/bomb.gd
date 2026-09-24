@@ -18,9 +18,9 @@ func _ready() -> void:
 	bomb.level = get_tree().current_scene.get_node("Map")
 	destructibles = bomb.level.destructibles
 	var test = get_tree().current_scene.get_node("Pausable/Player")
-	test.connect("exploded", _on_timer_timeout)
+	test.connect("exploded", _on_explosion)
 
-func _on_timer_timeout():
+func _on_explosion():
 	self.visible = false
 	var used_cells = destructibles.get_used_cells()
 	var pos = destructibles.local_to_map(global_position)

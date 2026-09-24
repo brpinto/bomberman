@@ -9,9 +9,17 @@
 [ext_resource type="Texture2D" uid="uid://7n62j6ekbisd" path="res://Sprites/player-left-03.png" id="3_fkybt"]
 [ext_resource type="Script" uid="uid://bi1isaak8q0n" path="res://Scripts/bomb_res.gd" id="3_pu2lt"]
 [ext_resource type="Texture2D" uid="uid://gokjuaguqc6o" path="res://Sprites/walk-down-03.png" id="4_f1ek2"]
+[ext_resource type="Texture2D" uid="uid://ci2joxrbbu6j8" path="res://Sprites/death-01.png" id="4_fs7ks"]
+[ext_resource type="Texture2D" uid="uid://wry8x3eg58nv" path="res://Sprites/death-02.png" id="5_l6n3p"]
+[ext_resource type="Texture2D" uid="uid://d3gkgmytytt6o" path="res://Sprites/death-03.png" id="6_olqyp"]
+[ext_resource type="Texture2D" uid="uid://bbah183wtqjt4" path="res://Sprites/death-04.png" id="7_wpjfl"]
+[ext_resource type="Texture2D" uid="uid://v0yaniyh5qm5" path="res://Sprites/death-05.png" id="8_bi64h"]
 [ext_resource type="Texture2D" uid="uid://cvrjls4b7o2vu" path="res://Sprites/walk-up-01.png" id="8_tx1dd"]
+[ext_resource type="Texture2D" uid="uid://degk3v7wceb8" path="res://Sprites/death-06.png" id="9_2ijsl"]
 [ext_resource type="Texture2D" uid="uid://pqotyte0fhtp" path="res://Sprites/walk-up-02.png" id="9_gymyn"]
+[ext_resource type="Texture2D" uid="uid://ojytra7xcsel" path="res://Sprites/death-07.png" id="10_p1odr"]
 [ext_resource type="Texture2D" uid="uid://bqvsk8u21drve" path="res://Sprites/walk-up-03.png" id="10_pu2lt"]
+[ext_resource type="Texture2D" uid="uid://cylo6a37n7pj2" path="res://Sprites/empty.png" id="11_l6n3p"]
 
 [sub_resource type="Resource" id="Resource_ukyrk"]
 script = ExtResource("2_pu2lt")
@@ -23,6 +31,35 @@ metadata/_custom_type_script = "uid://bi1isaak8q0n"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0yhpk"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_fs7ks")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_l6n3p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_olqyp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_wpjfl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_bi64h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_2ijsl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_p1odr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_l6n3p")
+}],
+"loop": 0,
+"name": &"death",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_3smsa")
@@ -76,7 +113,7 @@ bomb = SubResource("Resource_6tv4u")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1835056720]
 sprite_frames = SubResource("SpriteFrames_0yhpk")
-animation = &"walk_side"
+animation = &"death"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1441773133]
 shape = SubResource("RectangleShape2D_x3wgy")
@@ -96,7 +133,8 @@ limit_smoothed = true
 position_smoothing_enabled = true
 
 [node name="BombTimer" type="Timer" parent="." unique_id=1828819600]
-wait_time = 5.0
+wait_time = 3.0
 one_shot = true
 
+[connection signal="dead" from="." to="." method="_on_player_dead"]
 [connection signal="timeout" from="BombTimer" to="." method="_on_bomb_timer_timeout"]
