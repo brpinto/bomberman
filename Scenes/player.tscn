@@ -113,7 +113,8 @@ bomb = SubResource("Resource_6tv4u")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1835056720]
 sprite_frames = SubResource("SpriteFrames_0yhpk")
-animation = &"death"
+animation = &"walk_side"
+autoplay = "walk_side"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1441773133]
 shape = SubResource("RectangleShape2D_x3wgy")
@@ -123,7 +124,7 @@ target_position = Vector2(-9, 0)
 collide_with_areas = true
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1789389453]
-zoom = Vector2(2, 2)
+zoom = Vector2(4, 4)
 process_callback = 0
 limit_left = 0
 limit_top = 0
