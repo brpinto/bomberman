@@ -24,7 +24,7 @@ window/stretch/aspect="expand"
 
 [editor]
 
-movie_writer/movie_file="/home/brounch/Lab/bomberman/record.avi"
+movie_writer/movie_file="/Users/brounch/Lab/Godot/Learning/bomberman/record.avi"
 
 [physics]
 
