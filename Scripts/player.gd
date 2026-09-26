@@ -18,8 +18,7 @@ func _ready() -> void:
 	move.destructibles = get_tree().current_scene.get_node("Map/Destructibles")
 	
 	raycast = $RayCast2D
-	
-	
+
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("ui_left"):
 		raycast.target_position = Vector2(-9, 0)

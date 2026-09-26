@@ -42,17 +42,17 @@ func is_walkable(cell_to_check: Vector2i) -> bool:
 		is_wall = true
 	if destructible_data and destructible_data.get_custom_data("destructible"):
 		is_destructible = true
-	
+
 	if is_wall:
 		return false
 	elif is_destructible:
 		return false
-	
+
 	return true
 
 func move_h(delta, direction):
 	animated_sprite.play("walk_side")
-	
+
 	if direction == "LEFT":
 		dir_vect = Vector2.LEFT
 		animated_sprite.flip_h = false
@@ -61,12 +61,10 @@ func move_h(delta, direction):
 		animated_sprite.flip_h = true
 
 	var player_pos = walls.local_to_map(target.global_position)
-	var cell_pos: Vector2i = player_pos + directions[LITTERAL_DIR[direction]]
-	print("to_go: ", cell_pos)
-	print("player_pos: ", player_pos)
-	print(target.raycast.is_colliding())
-	if is_walkable(cell_pos) and not target.raycast.is_colliding():
-		target.global_position += dir_vect 
+	var cell_pos = player_pos + directions[LITTERAL_DIR[direction]]
+	
+	if not target.raycast.is_colliding():
+		target.global_position += dir_vect
 
 func move_v(delta, direction):
 	if direction == "UP":
@@ -75,8 +73,8 @@ func move_v(delta, direction):
 	else:
 		dir_vect = Vector2.DOWN
 		animated_sprite.play("walk_down")
-	
+
 	var player_pos = walls.local_to_map(target.global_position)
 	var cell_pos: Vector2i = player_pos + directions[LITTERAL_DIR[direction]]
-	if is_walkable(cell_pos) and not target.raycast.is_colliding():
+	if not target.raycast.is_colliding():
 		target.global_position += dir_vect
