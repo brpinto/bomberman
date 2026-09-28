@@ -5,14 +5,12 @@ extends CharacterBody2D
 signal dead
 
 var raycast: RayCast2D
-var destructibles: TileMapLayer
-var can_move = true
 
 var directions: Array = [
-	Vector2i(0, -9),
-	Vector2i(0, 9),
-	Vector2i(-9, 0),
-	Vector2i(9, 0)
+	Vector2i(0, -1),
+	Vector2i(0, 1),
+	Vector2i(-1, 0),
+	Vector2i(1, 0)
 ]
 
 enum LIT_DIR {
@@ -33,46 +31,43 @@ func _ready() -> void:
 	
 	
 func _process(delta: float) -> void:
-	if not can_move:
-		return
-
 	var free: Array = []
 	var enemy_pos = move.walls.local_to_map(self.global_position)
 	var cell_pos: Vector2i = enemy_pos + directions[curr_dir]
-	raycast.target_position = directions[curr_dir]
-
-	if move.is_walkable(cell_pos) or raycast.is_colliding():
-		for i in LIT_DIR:
-			enemy_pos = move.walls.local_to_map(self.global_position)
-			cell_pos = enemy_pos + directions[LIT_DIR[i]]
-
-			raycast.target_position = directions[LIT_DIR[i]]
-			if not move.is_walkable(cell_pos) or not raycast.is_colliding():
-				free.append(i)
 	
-	if free.size() > 0:
-		var new_dir = free[randi_range(0, free.size() - 1)]
-		curr_dir = LIT_DIR[new_dir]
-		raycast.target_position = directions[curr_dir]
-		
-	if curr_dir == LIT_DIR.LEFT:
-		move.move_h(delta, "LEFT")
-	elif curr_dir == LIT_DIR.RIGHT:
-		move.move_h(delta, "RIGHT")
-	elif curr_dir == LIT_DIR.UP:
-		move.move_v(delta, "UP")
-	else:
-		move.move_v(delta, "DOWN")
-
-	var map_pos = move.destructibles.local_to_map(self.global_position)
-	var tile_data = move.destructibles.get_cell_tile_data(map_pos)
-	if tile_data:
-		if tile_data.get_custom_data("destructible"):
-			dead.emit()
+	raycast.target_position = directions[curr_dir]
+#
+	#if raycast.is_colliding():
+		#for i in LIT_DIR:
+			#enemy_pos = move.walls.local_to_map(self.global_position)
+			#cell_pos = enemy_pos + directions[LIT_DIR[i]]
+#
+			#raycast.target_position = directions[LIT_DIR[i]]
+			#if not raycast.is_colliding():
+				#free.append(i)
+	#
+	#if free.size() > 0:
+		#var new_dir = free[randi_range(0, free.size() - 1)]
+		#curr_dir = LIT_DIR[new_dir]
+		#raycast.target_position = directions[curr_dir]
+		#
+	#if curr_dir == LIT_DIR.LEFT:
+		#move.move_h(delta, "LEFT")
+	#elif curr_dir == LIT_DIR.RIGHT:
+		#move.move_h(delta, "RIGHT")
+	#elif curr_dir == LIT_DIR.UP:
+		#move.move_v(delta, "UP")
+	#else:
+		#move.move_v(delta, "DOWN")
+#
+	#var map_pos = move.destructibles.local_to_map(self.global_position)
+	#var tile_data = move.destructibles.get_cell_tile_data(map_pos)
+	#if tile_data:
+		#if tile_data.get_custom_data("destructible"):
+			#dead.emit()
 
 
 func _on_death() -> void:
-	can_move = false
 	$AnimatedSprite2D.stop()
 	$AnimatedSprite2D.play("death")
 	await get_tree().create_timer(5.0).timeout

@@ -60,8 +60,9 @@ func move_h(delta, direction):
 		dir_vect = Vector2.RIGHT
 		animated_sprite.flip_h = true
 
-	var player_pos = walls.local_to_map(target.global_position)
-	var cell_pos = player_pos + directions[LITTERAL_DIR[direction]]
+	var target_pos = walls.local_to_map(target.global_position)
+	print(directions[LITTERAL_DIR[direction]])
+	var cell_pos = target_pos + directions[LITTERAL_DIR[direction]]
 	
 	if not target.raycast.is_colliding():
 		target.global_position += dir_vect
