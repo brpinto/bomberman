@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @export var move: Move
-@export var bomb: Bomb
+@onready var bomb = preload("res://Scenes/bomb.tscn")
 
 signal exploded
 signal dead
@@ -37,9 +37,8 @@ func _process(delta: float) -> void:
 
 	if Input.is_key_pressed(KEY_W):
 		if can_put_bomb:
-			put_bomb(global_position)
+			put_bomb(self.global_position)
 			can_put_bomb = false
-			$BombTimer.start()
 
 	var map_pos = move.destructibles.local_to_map(global_position)
 	var tile_data = move.destructibles.get_cell_tile_data(map_pos)
@@ -48,16 +47,16 @@ func _process(delta: float) -> void:
 		if tile_data.get_custom_data("destructible"):
 			dead.emit()
 
-func _on_bomb_timer_timeout() -> void:
-	can_put_bomb = true
-	exploded.emit()
-
-func put_bomb(pos: Vector2):
-	var bomb_instance = bomb.bomb.instantiate()
-	bomb_instance.global_position = (floor(pos / 16) * 16) + Vector2(8, 8)
-	get_tree().current_scene.add_child(bomb_instance)
-
 func _on_player_dead() -> void:
 	$AnimatedSprite2D.play("death")
 	await get_tree().create_timer(3.0).timeout
 	self.process_mode = Node.PROCESS_MODE_DISABLED
+
+
+func put_bomb(pos: Vector2):
+	var bomb_instance = bomb.instantiate()
+	get_tree().current_scene.add_child(bomb_instance)
+	bomb_instance.exploded.connect(_on_explosion, CONNECT_ONE_SHOT)
+
+func _on_explosion():
+	can_put_bomb = true
