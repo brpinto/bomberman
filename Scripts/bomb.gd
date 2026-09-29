@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var bomb: Bomb
+@export var damage: Damage
 
 signal exploded
 
@@ -32,7 +32,12 @@ func _on_explosion():
 
 	var rotation_index = 0
 	while rotation_index <= surrounding.size() - 1:
-		map.destructibles.set_cell(surrounding[rotation_index], 2, Vector2i(0, 0), TileTransform[rotation_index])
+		var data = map.destructibles.get_cell_tile_data(surrounding[rotation_index])
+		if data:
+			if data.get_custom_data("destructible"):
+				map.destructibles.set_cell(surrounding[rotation_index], 1, Vector2i(0, 0))
+		else:
+			map.destructibles.set_cell(surrounding[rotation_index], 2, Vector2i(0, 0), TileTransform[rotation_index])
 		rotation_index += 1
 	map.destructibles.set_cell(pos, 2, Vector2i(0, 2))
 	await get_tree().create_timer(0.65).timeout
@@ -41,6 +46,3 @@ func _on_explosion():
 	map.destructibles.set_cell(pos, -1)
 	exploded.emit()
 	self.queue_free()
-
-#func _on_bomb_timer_timeout() -> void:
-	

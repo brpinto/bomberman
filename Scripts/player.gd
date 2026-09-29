@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var move: Move
+@export var health: Health
 @onready var bomb = preload("res://Scenes/bomb.tscn")
 
 signal exploded

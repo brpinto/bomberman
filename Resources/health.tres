@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Health" format=3 uid="uid://cmwdq6tor8o3c"]
+
+[ext_resource type="Script" uid="uid://di4cqxyc7pf4x" path="res://Scripts/health.gd" id="1_subip"]
+
+[resource]
+script = ExtResource("1_subip")
+health = 100
+metadata/_custom_type_script = "uid://di4cqxyc7pf4x"
