@@ -14,6 +14,7 @@
 
 [sub_resource type="Resource" id="Resource_ghaa6"]
 script = ExtResource("2_0830c")
+speed = 5
 metadata/_custom_type_script = "uid://dk01xqyffyyse"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0lc47"]

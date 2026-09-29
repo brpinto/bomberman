@@ -35,24 +35,22 @@ func _process(delta: float) -> void:
 	var enemy_pos = move.walls.local_to_map(self.global_position)
 	var cell_pos: Vector2i = enemy_pos + directions[curr_dir]
 	
-	raycast.target_position = directions[curr_dir]
+	raycast.target_position = directions[curr_dir] * 9
 #
-	#if raycast.is_colliding():
-		#for i in LIT_DIR:
-			#enemy_pos = move.walls.local_to_map(self.global_position)
-			#cell_pos = enemy_pos + directions[LIT_DIR[i]]
-#
-			#raycast.target_position = directions[LIT_DIR[i]]
-			#if not raycast.is_colliding():
-				#free.append(i)
-	#
-	#if free.size() > 0:
-		#var new_dir = free[randi_range(0, free.size() - 1)]
-		#curr_dir = LIT_DIR[new_dir]
+	if raycast.is_colliding():
+		var surroundings = move.walls.get_surrounding_cells(enemy_pos)
+		for cell in surroundings:
+			if move.is_walkable(cell):
+				free.append(cell)
+
+	if free.size() > 0:
+		var new_dir = free[randi_range(0, free.size() - 1)]
+		var test = new_dir - enemy_pos
+		print(test)
 		#raycast.target_position = directions[curr_dir]
-		#
+		
 	#if curr_dir == LIT_DIR.LEFT:
-		#move.move_h(delta, "LEFT")
+	move.move_h(delta, "LEFT")
 	#elif curr_dir == LIT_DIR.RIGHT:
 		#move.move_h(delta, "RIGHT")
 	#elif curr_dir == LIT_DIR.UP:
