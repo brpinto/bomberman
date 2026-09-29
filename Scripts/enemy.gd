@@ -20,7 +20,7 @@ enum LIT_DIR {
 	RIGHT = 3
 }
 
-var curr_dir = LIT_DIR.LEFT
+var curr_dir = Vector2i.LEFT
 
 func _ready() -> void:
 	move.target = self
@@ -33,9 +33,9 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var free: Array = []
 	var enemy_pos = move.walls.local_to_map(self.global_position)
-	var cell_pos: Vector2i = enemy_pos + directions[curr_dir]
+	var cell_pos: Vector2i = enemy_pos + curr_dir
 	
-	raycast.target_position = directions[curr_dir] * 9
+	raycast.target_position = curr_dir * 9
 #
 	if raycast.is_colliding():
 		var surroundings = move.walls.get_surrounding_cells(enemy_pos)
@@ -45,19 +45,16 @@ func _process(delta: float) -> void:
 
 	if free.size() > 0:
 		var new_dir = free[randi_range(0, free.size() - 1)]
-		var test = new_dir - enemy_pos
-		print(test)
+		curr_dir = new_dir - enemy_pos
+
 		#raycast.target_position = directions[curr_dir]
-		
-	#if curr_dir == LIT_DIR.LEFT:
-	move.move_h(delta, "LEFT")
-	#elif curr_dir == LIT_DIR.RIGHT:
-		#move.move_h(delta, "RIGHT")
-	#elif curr_dir == LIT_DIR.UP:
-		#move.move_v(delta, "UP")
-	#else:
-		#move.move_v(delta, "DOWN")
-#
+	
+	if curr_dir == Vector2i.RIGHT:
+		$AnimatedSprite2D.flip_h = true
+	else:
+		$AnimatedSprite2D.flip_h = false
+	move.move(delta, curr_dir)
+
 	#var map_pos = move.destructibles.local_to_map(self.global_position)
 	#var tile_data = move.destructibles.get_cell_tile_data(map_pos)
 	#if tile_data:

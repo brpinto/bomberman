@@ -9,7 +9,7 @@ var walls: TileMapLayer
 var destructibles: TileMapLayer
 var solid_walls: Array[Vector2i]
 var destructible_walls: Array[Vector2i]
-var dir_vect: Vector2
+var dir_vect
 
 enum LITTERAL_DIR {
 	UP,
@@ -50,31 +50,20 @@ func is_walkable(cell_to_check: Vector2i) -> bool:
 
 	return true
 
-func move_h(delta, direction):
+func move(delta, direction: Vector2i):
 	animated_sprite.play("walk_side")
 
-	if direction == "LEFT":
-		dir_vect = Vector2.LEFT
+	if direction == Vector2i.LEFT:
 		animated_sprite.flip_h = false
-	else:
-		dir_vect = Vector2.RIGHT
+	elif direction == Vector2i.RIGHT:
 		animated_sprite.flip_h = true
-
-	var target_pos = walls.local_to_map(target.global_position)
-	var cell_pos = target_pos + directions[LITTERAL_DIR[direction]]
-	
-	if not target.raycast.is_colliding():
-		target.global_position += dir_vect
-
-func move_v(delta, direction):
-	if direction == "UP":
-		dir_vect = Vector2.UP
+	elif direction == Vector2i.UP:
 		animated_sprite.play("walk_up")
 	else:
-		dir_vect = Vector2.DOWN
 		animated_sprite.play("walk_down")
 
-	var player_pos = walls.local_to_map(target.global_position)
-	var cell_pos: Vector2i = player_pos + directions[LITTERAL_DIR[direction]]
+	var target_pos = walls.local_to_map(target.global_position)
+	var cell_pos = target_pos + direction
+	
 	if not target.raycast.is_colliding():
-		target.global_position += dir_vect
+		target.global_position += direction as Vector2 * delta * speed

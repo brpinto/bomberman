@@ -113,7 +113,7 @@ bomb = SubResource("Resource_6tv4u")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1835056720]
 sprite_frames = SubResource("SpriteFrames_0yhpk")
-animation = &"walk_side"
+animation = &"walk_down"
 autoplay = "walk_side"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1441773133]

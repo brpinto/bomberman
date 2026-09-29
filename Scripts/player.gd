@@ -22,16 +22,16 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("ui_left"):
 		raycast.target_position = Vector2(-9, 0)
-		move.move_h(delta, "LEFT")
+		move.move(delta, Vector2i.LEFT)
 	if Input.is_action_pressed("ui_right"):
 		raycast.target_position = Vector2(9, 0)
-		move.move_h(delta, "RIGHT")
+		move.move(delta, Vector2i.RIGHT)
 	if Input.is_action_pressed("ui_down"):
 		raycast.target_position = Vector2(0, 9)
-		move.move_v(delta, "DOWN")
+		move.move(delta, Vector2i.DOWN)
 	if Input.is_action_pressed("ui_up"):
 		raycast.target_position = Vector2(0, -9)
-		move.move_v(delta, "UP")
+		move.move(delta, Vector2i.UP)
 	if Input.is_key_pressed(KEY_W):
 		if can_put_bomb:
 			put_bomb(global_position)
