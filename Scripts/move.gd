@@ -51,12 +51,14 @@ func is_walkable(cell_to_check: Vector2i) -> bool:
 	return true
 
 func move(delta, direction: Vector2i):
-	animated_sprite.play("walk_side")
+	
 
 	if direction == Vector2i.LEFT:
 		animated_sprite.flip_h = false
+		animated_sprite.play("walk_side")
 	elif direction == Vector2i.RIGHT:
 		animated_sprite.flip_h = true
+		animated_sprite.play("walk_side")
 	elif direction == Vector2i.UP:
 		animated_sprite.play("walk_up")
 	else:
