@@ -11,20 +11,6 @@ var solid_walls: Array[Vector2i]
 var destructible_walls: Array[Vector2i]
 var dir_vect
 
-enum LITTERAL_DIR {
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT,
-}
-
-var directions = [
-	Vector2i(0, -1),
-	Vector2i(0, 1),
-	Vector2i(-1, 0),
-	Vector2i(1, 0)
-]
-
 func _ready():
 	solid_walls = walls.get_used_cells()
 	destructible_walls = destructibles.get_used_cells()

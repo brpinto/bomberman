@@ -5,21 +5,6 @@ extends CharacterBody2D
 signal dead
 
 var raycast: RayCast2D
-
-var directions: Array = [
-	Vector2i(0, -1),
-	Vector2i(0, 1),
-	Vector2i(-1, 0),
-	Vector2i(1, 0)
-]
-
-enum LIT_DIR {
-	UP = 0,
-	DOWN = 1,
-	LEFT = 2,
-	RIGHT = 3
-}
-
 var curr_dir = Vector2i.LEFT
 
 func _ready() -> void:
@@ -28,15 +13,14 @@ func _ready() -> void:
 	move.walls = get_tree().current_scene.get_node("Map/Walls")
 	move.destructibles = get_tree().current_scene.get_node("Map/Destructibles")
 	raycast = $RayCast2D
-	
-	
+
 func _process(delta: float) -> void:
 	var free: Array = []
 	var enemy_pos = move.walls.local_to_map(self.global_position)
 	var cell_pos: Vector2i = enemy_pos + curr_dir
-	
+
 	raycast.target_position = curr_dir * 9
-#
+
 	if raycast.is_colliding():
 		var surroundings = move.walls.get_surrounding_cells(enemy_pos)
 		for cell in surroundings:
@@ -47,8 +31,6 @@ func _process(delta: float) -> void:
 		var new_dir = free[randi_range(0, free.size() - 1)]
 		curr_dir = new_dir - enemy_pos
 
-		#raycast.target_position = directions[curr_dir]
-	
 	if curr_dir == Vector2i.RIGHT:
 		$AnimatedSprite2D.flip_h = true
 	else:
