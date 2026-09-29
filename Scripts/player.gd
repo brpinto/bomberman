@@ -7,7 +7,6 @@ signal exploded
 signal dead
 
 var can_put_bomb: bool = true
-const TILE_SIZE = 16
 var raycast: RayCast2D
 var destructibles: TileMapLayer
 
@@ -16,22 +15,26 @@ func _ready() -> void:
 	move.target = self
 	move.walls = get_tree().current_scene.get_node("Map/Walls")
 	move.destructibles = get_tree().current_scene.get_node("Map/Destructibles")
-	
+
 	raycast = $RayCast2D
 
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("ui_left"):
 		raycast.target_position = Vector2(-9, 0)
 		move.move(delta, Vector2i.LEFT)
+
 	if Input.is_action_pressed("ui_right"):
 		raycast.target_position = Vector2(9, 0)
 		move.move(delta, Vector2i.RIGHT)
+
 	if Input.is_action_pressed("ui_down"):
 		raycast.target_position = Vector2(0, 9)
 		move.move(delta, Vector2i.DOWN)
+
 	if Input.is_action_pressed("ui_up"):
 		raycast.target_position = Vector2(0, -9)
 		move.move(delta, Vector2i.UP)
+
 	if Input.is_key_pressed(KEY_W):
 		if can_put_bomb:
 			put_bomb(global_position)
@@ -40,10 +43,10 @@ func _process(delta: float) -> void:
 
 	var map_pos = move.destructibles.local_to_map(global_position)
 	var tile_data = move.destructibles.get_cell_tile_data(map_pos)
+
 	if tile_data:
 		if tile_data.get_custom_data("destructible"):
 			dead.emit()
-			
 
 func _on_bomb_timer_timeout() -> void:
 	can_put_bomb = true
