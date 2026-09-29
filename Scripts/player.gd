@@ -37,7 +37,7 @@ func _process(delta: float) -> void:
 			put_bomb(global_position)
 			can_put_bomb = false
 			$BombTimer.start()
-			
+
 	var map_pos = move.destructibles.local_to_map(global_position)
 	var tile_data = move.destructibles.get_cell_tile_data(map_pos)
 	if tile_data:
