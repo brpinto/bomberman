@@ -1,25 +1,32 @@
 extends CharacterBody2D
 
 @export var move: Move
-@export var health: Health
-@onready var bomb = preload("res://Scenes/bomb.tscn")
+@export var stats: PlayerStats
+@onready var bomb_instance = preload("res://Scenes/bomb.tscn")
 
-signal exploded
 signal dead
 
 var can_put_bomb: bool = true
 var raycast: RayCast2D
 var destructibles: TileMapLayer
+var bomb: Bomb
+var health: int
+var can_move: bool = true
 
 func _ready() -> void:
 	move.animated_sprite = $AnimatedSprite2D
 	move.target = self
 	move.walls = get_tree().current_scene.get_node("Map/Walls")
 	move.destructibles = get_tree().current_scene.get_node("Map/Destructibles")
+	
+	health = stats.health
 
 	raycast = $RayCast2D
 
 func _process(delta: float) -> void:
+	if not can_move:
+		return
+
 	if Input.is_action_pressed("ui_left"):
 		raycast.target_position = Vector2(-9, 0)
 		move.move(delta, Vector2i.LEFT)
@@ -46,18 +53,29 @@ func _process(delta: float) -> void:
 
 	if tile_data:
 		if tile_data.get_custom_data("destructible"):
-			dead.emit()
+			bomb = get_tree().current_scene.get_node("Bomb")
+			take_damage(bomb.stats.damage)
 
-func _on_player_dead() -> void:
+	if raycast.is_colliding():
+		var collider = raycast.get_collider()
+		if collider is Enemy:
+			take_damage(collider.stats.damage)
+
+func put_bomb(pos: Vector2):
+	var new_bomb = bomb_instance.instantiate()
+	get_tree().current_scene.add_child(new_bomb)
+	new_bomb.exploded.connect(_on_explosion, CONNECT_ONE_SHOT)
+
+func _on_explosion():
+	can_put_bomb = true
+
+func _on_death():
+	can_move = false
 	$AnimatedSprite2D.play("death")
 	await get_tree().create_timer(3.0).timeout
 	self.process_mode = Node.PROCESS_MODE_DISABLED
 
-
-func put_bomb(pos: Vector2):
-	var bomb_instance = bomb.instantiate()
-	get_tree().current_scene.add_child(bomb_instance)
-	bomb_instance.exploded.connect(_on_explosion, CONNECT_ONE_SHOT)
-
-func _on_explosion():
-	can_put_bomb = true
+func take_damage(amount: int) -> void:
+	health -= amount
+	if health <= 0:
+		dead.emit()

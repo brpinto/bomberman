@@ -1,17 +1,28 @@
 extends CharacterBody2D
+class_name Enemy
 
 @export var move: Move
+@export var stats: EnemyStats
 
 signal dead
 
 var raycast: RayCast2D
 var curr_dir = Vector2i.LEFT
+var bomb
+var can_move: bool
+var health: int
+var damage: int
 
 func _ready() -> void:
 	move.target = self
+	can_move = true
 	move.animated_sprite = $AnimatedSprite2D
 	move.walls = get_tree().current_scene.get_node("Map/Walls")
 	move.destructibles = get_tree().current_scene.get_node("Map/Destructibles")
+	
+	health = stats.health
+	damage = stats.damage
+	
 	raycast = $RayCast2D
 
 func _process(delta: float) -> void:
@@ -35,17 +46,26 @@ func _process(delta: float) -> void:
 		$AnimatedSprite2D.flip_h = true
 	else:
 		$AnimatedSprite2D.flip_h = false
-	move.move(delta, curr_dir)
+	
+	if can_move:
+		move.move(delta, curr_dir)
 
-	#var map_pos = move.destructibles.local_to_map(self.global_position)
-	#var tile_data = move.destructibles.get_cell_tile_data(map_pos)
-	#if tile_data:
-		#if tile_data.get_custom_data("destructible"):
-			#dead.emit()
-
+	var map_pos = move.destructibles.local_to_map(self.global_position)
+	var tile_data = move.destructibles.get_cell_tile_data(map_pos)
+	if tile_data:
+		if tile_data.get_custom_data("destructible"):
+			bomb = get_tree().current_scene.get_node("Bomb")
+			take_damage(bomb.stats.damage)
 
 func _on_death() -> void:
+	can_move = false
 	$AnimatedSprite2D.stop()
 	$AnimatedSprite2D.play("death")
 	await get_tree().create_timer(5.0).timeout
 	self.process_mode = Node.PROCESS_MODE_DISABLED
+
+func take_damage(amount: int) -> void:
+	self.health -= amount
+	
+	if self.health <= 0:
+		dead.emit()

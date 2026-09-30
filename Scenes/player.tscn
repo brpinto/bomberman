@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ch4ql37rehd56" path="res://Sprites/player-left-02.png" id="2_vgqql"]
 [ext_resource type="Texture2D" uid="uid://d3gqm75sn25h1" path="res://Sprites/walk-down-02.png" id="3_8erm5"]
 [ext_resource type="Texture2D" uid="uid://7n62j6ekbisd" path="res://Sprites/player-left-03.png" id="3_fkybt"]
-[ext_resource type="Script" uid="uid://bi1isaak8q0n" path="res://Scripts/bomb_res.gd" id="3_pu2lt"]
+[ext_resource type="Script" uid="uid://di4cqxyc7pf4x" path="res://Scripts/player_stats.gd" id="3_l6n3p"]
 [ext_resource type="Texture2D" uid="uid://gokjuaguqc6o" path="res://Sprites/walk-down-03.png" id="4_f1ek2"]
 [ext_resource type="Texture2D" uid="uid://ci2joxrbbu6j8" path="res://Sprites/death-01.png" id="4_fs7ks"]
 [ext_resource type="Texture2D" uid="uid://wry8x3eg58nv" path="res://Sprites/death-02.png" id="5_l6n3p"]
@@ -25,9 +25,10 @@
 script = ExtResource("2_pu2lt")
 metadata/_custom_type_script = "uid://dk01xqyffyyse"
 
-[sub_resource type="Resource" id="Resource_6tv4u"]
-script = ExtResource("3_pu2lt")
-metadata/_custom_type_script = "uid://bi1isaak8q0n"
+[sub_resource type="Resource" id="Resource_olqyp"]
+script = ExtResource("3_l6n3p")
+health = 100
+metadata/_custom_type_script = "uid://di4cqxyc7pf4x"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0yhpk"]
 animations = [{
@@ -109,7 +110,7 @@ size = Vector2(16, 16)
 [node name="Player" type="CharacterBody2D" unique_id=564091004]
 script = ExtResource("1_vgqql")
 move = SubResource("Resource_ukyrk")
-bomb = SubResource("Resource_6tv4u")
+stats = SubResource("Resource_olqyp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1835056720]
 sprite_frames = SubResource("SpriteFrames_0yhpk")
@@ -133,4 +134,4 @@ limit_bottom = 208
 limit_smoothed = true
 position_smoothing_enabled = true
 
-[connection signal="dead" from="." to="." method="_on_player_dead"]
+[connection signal="dead" from="." to="." method="_on_death"]

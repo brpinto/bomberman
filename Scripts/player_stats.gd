@@ -1,4 +1,4 @@
 extends Resource
-class_name Health
+class_name PlayerStats
 
 @export var health: int

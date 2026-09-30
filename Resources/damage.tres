@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="Damage" format=3 uid="uid://dcxv8ylomc6yo"]
-
-[ext_resource type="Script" uid="uid://d28ydc61fxdw8" path="res://Scripts/damage.gd" id="1_j3cn8"]
-
-[resource]
-script = ExtResource("1_j3cn8")
-amount = 100
-metadata/_custom_type_script = "uid://d28ydc61fxdw8"
