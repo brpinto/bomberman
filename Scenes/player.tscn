@@ -125,7 +125,7 @@ target_position = Vector2(-9, 0)
 collide_with_areas = true
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1789389453]
-zoom = Vector2(4, 4)
+zoom = Vector2(3.5, 3.5)
 process_callback = 0
 limit_left = 0
 limit_top = 0

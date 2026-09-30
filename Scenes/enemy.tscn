@@ -22,6 +22,7 @@ metadata/_custom_type_script = "uid://dk01xqyffyyse"
 script = ExtResource("3_56vhr")
 health = 100
 damage = 100
+point = 100
 metadata/_custom_type_script = "uid://5ljyewq6uujf"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0lc47"]

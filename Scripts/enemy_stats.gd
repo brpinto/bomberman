@@ -3,3 +3,4 @@ class_name EnemyStats
 
 @export var health: int
 @export var damage: int
+@export var point: int

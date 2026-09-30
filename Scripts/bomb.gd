@@ -47,4 +47,4 @@ func _on_explosion():
 		destructibles.set_cell(cell, -1)
 	destructibles.set_cell(pos, -1)
 	exploded.emit()
-	self.queue_free()
+	#self.queue_free()

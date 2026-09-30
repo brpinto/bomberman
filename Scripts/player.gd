@@ -52,9 +52,9 @@ func _process(delta: float) -> void:
 	var tile_data = move.destructibles.get_cell_tile_data(map_pos)
 
 	if tile_data:
-		if tile_data.get_custom_data("destructible"):
-			bomb = get_tree().current_scene.get_node("Bomb")
-			take_damage(bomb.stats.damage)
+		
+		if tile_data.get_custom_data("explosion"):
+			take_damage(100)
 
 	if raycast.is_colliding():
 		var collider = raycast.get_collider()

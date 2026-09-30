@@ -22,9 +22,11 @@ process_mode = 3
 script = ExtResource("1_ig7tw")
 
 [node name="Map" parent="." unique_id=376192080 instance=ExtResource("7_6bp64")]
+position = Vector2(0, 10)
 
 [node name="Pausable" type="Node2D" parent="." unique_id=1212574514]
 process_mode = 1
+position = Vector2(0, 10)
 
 [node name="Control" type="CanvasLayer" parent="Pausable" unique_id=1625213289]
 
