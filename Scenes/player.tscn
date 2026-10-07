@@ -108,6 +108,7 @@ animations = [{
 size = Vector2(16, 16)
 
 [node name="Player" type="CharacterBody2D" unique_id=564091004]
+scale = Vector2(0.9, 0.9)
 script = ExtResource("1_vgqql")
 move = SubResource("Resource_ukyrk")
 stats = SubResource("Resource_olqyp")

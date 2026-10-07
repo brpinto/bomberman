@@ -11,6 +11,7 @@ var raycast: RayCast2D
 var destructibles: TileMapLayer
 var bomb: Bomb
 var health: int
+var score: int
 var can_move: bool = true
 
 func _ready() -> void:
@@ -19,8 +20,14 @@ func _ready() -> void:
 	move.walls = get_tree().current_scene.get_node("Map/Walls")
 	move.destructibles = get_tree().current_scene.get_node("Map/Destructibles")
 	
+	var enemies = get_tree().get_nodes_in_group("enemies")
+	
+	for enemy in enemies:
+		enemy.dead.connect(_on_enemy_death, CONNECT_ONE_SHOT)
+	
 	health = stats.health
-
+	score = stats.score
+	
 	raycast = $RayCast2D
 
 func _process(delta: float) -> void:
@@ -45,7 +52,7 @@ func _process(delta: float) -> void:
 
 	if Input.is_key_pressed(KEY_W):
 		if can_put_bomb:
-			put_bomb(self.global_position)
+			put_bomb()
 			can_put_bomb = false
 
 	var map_pos = move.destructibles.local_to_map(global_position)
@@ -61,8 +68,9 @@ func _process(delta: float) -> void:
 		if collider is Enemy:
 			take_damage(collider.stats.damage)
 
-func put_bomb(pos: Vector2):
+func put_bomb():
 	var new_bomb = bomb_instance.instantiate()
+	new_bomb.global_position = self.global_position
 	get_tree().current_scene.add_child(new_bomb)
 	new_bomb.exploded.connect(_on_explosion, CONNECT_ONE_SHOT)
 
@@ -79,3 +87,7 @@ func take_damage(amount: int) -> void:
 	health -= amount
 	if health <= 0:
 		dead.emit()
+
+func _on_enemy_death(point: int) -> void:
+	score += point
+	print(score)

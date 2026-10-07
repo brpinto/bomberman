@@ -4,7 +4,7 @@ class_name Enemy
 @export var move: Move
 @export var stats: EnemyStats
 
-signal dead
+signal dead(point: int)
 
 var raycast: RayCast2D
 var curr_dir = Vector2i.LEFT
@@ -12,6 +12,7 @@ var bomb
 var can_move: bool
 var health: int
 var damage: int
+var point: int
 
 func _ready() -> void:
 	move.target = self
@@ -22,7 +23,8 @@ func _ready() -> void:
 	
 	health = stats.health
 	damage = stats.damage
-	
+	point = stats.point
+
 	raycast = $RayCast2D
 
 func _process(delta: float) -> void:
@@ -56,7 +58,7 @@ func _process(delta: float) -> void:
 		if tile_data.get_custom_data("explosion"):
 			take_damage(100)
 
-func _on_death() -> void:
+func _on_death(_point: int) -> void:
 	can_move = false
 	$AnimatedSprite2D.stop()
 	$AnimatedSprite2D.play("death")
@@ -67,4 +69,4 @@ func take_damage(amount: int) -> void:
 	self.health -= amount
 	
 	if self.health <= 0:
-		dead.emit()
+		dead.emit(point)

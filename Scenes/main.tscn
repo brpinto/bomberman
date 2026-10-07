@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://kjfx5evecnuj" path="res://Scripts/main.gd" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://beri8cfmweo7m" path="res://Scenes/player.tscn" id="4_kry3j"]
 [ext_resource type="PackedScene" uid="uid://dj16m7ewub4jf" path="res://Scenes/enemy.tscn" id="5_kry3j"]
+[ext_resource type="PackedScene" uid="uid://cjyvroles3n5d" path="res://Scenes/hud.tscn" id="6_6bp64"]
 [ext_resource type="Script" uid="uid://dk01xqyffyyse" path="res://Scripts/move.gd" id="6_21xkr"]
 [ext_resource type="PackedScene" uid="uid://c8q3fycydrij7" path="res://Scenes/map.tscn" id="7_6bp64"]
 
@@ -22,11 +23,11 @@ process_mode = 3
 script = ExtResource("1_ig7tw")
 
 [node name="Map" parent="." unique_id=376192080 instance=ExtResource("7_6bp64")]
-position = Vector2(0, 10)
+position = Vector2(0, 15)
 
 [node name="Pausable" type="Node2D" parent="." unique_id=1212574514]
 process_mode = 1
-position = Vector2(0, 10)
+position = Vector2(0, 15)
 
 [node name="Control" type="CanvasLayer" parent="Pausable" unique_id=1625213289]
 
@@ -50,9 +51,12 @@ text = "Playing"
 position = Vector2(88, 24)
 move = SubResource("Resource_21xkr")
 
-[node name="Enemy" parent="Pausable" unique_id=243479731 instance=ExtResource("5_kry3j")]
+[node name="Enemy" parent="Pausable" unique_id=243479731 groups=["enemies"] instance=ExtResource("5_kry3j")]
 position = Vector2(104, 120)
 move = SubResource("Resource_6bp64")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1266512184]
 shape = SubResource("RectangleShape2D_ig7tw")
+
+[node name="HUD" parent="." unique_id=673051817 instance=ExtResource("6_6bp64")]
+visible = false

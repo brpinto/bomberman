@@ -20,10 +20,13 @@ var TileTransform = [
 func _ready() -> void:
 	$AnimatedSprite2D.play("exploding")
 	destructibles = get_tree().current_scene.get_node("Map/Destructibles")
-	var player = get_tree().current_scene.get_node("Pausable/Player")
-	var map_pos = destructibles.local_to_map(player.global_position)
 	damage = stats.damage
-	global_position = destructibles.map_to_local(map_pos)
+	
+	#var player = get_tree().current_scene.get_node("Pausable/Player")
+	#var local_player_pos = destructibles.to_local(player.global_position)
+	#var map_pos = destructibles.local_to_map(local_player_pos)
+	#print(map_pos)
+	#global_position = player.global_position
 	$Timer.start()
 
 func _on_explosion():
@@ -31,7 +34,7 @@ func _on_explosion():
 	var used_cells = destructibles.get_used_cells()
 	var pos = destructibles.local_to_map(global_position)
 	var surrounding = destructibles.get_surrounding_cells(pos)
-
+	print(surrounding)
 	var rotation_index = 0
 	while rotation_index <= surrounding.size() - 1:
 		var data = destructibles.get_cell_tile_data(surrounding[rotation_index])
@@ -47,4 +50,4 @@ func _on_explosion():
 		destructibles.set_cell(cell, -1)
 	destructibles.set_cell(pos, -1)
 	exploded.emit()
-	#self.queue_free()
+	self.queue_free()

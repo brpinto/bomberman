@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://cjyvroles3n5d"]
+
+[ext_resource type="Script" uid="uid://sue2vu7lthri" path="res://Scripts/hud.gd" id="1_e0onf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3gfia"]
+content_margin_left = 25.0
+content_margin_top = 25.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0yhpk"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e0onf"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="HUD" type="CanvasLayer" unique_id=673051817]
+script = ExtResource("1_e0onf")
+
+[node name="Time" type="Label" parent="." unique_id=983362972]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_3gfia")
+text = "TIME"
+
+[node name="Seconds" type="Label" parent="." unique_id=1341056271]
+offset_left = 120.0
+offset_top = 25.0
+offset_right = 175.0
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_0yhpk")
+
+[node name="Score" type="Label" parent="." unique_id=1136868243]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 25.0
+offset_right = 20.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_e0onf")
+
+[node name="Timer" type="Timer" parent="." unique_id=1737220216]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
