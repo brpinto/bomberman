@@ -23,6 +23,7 @@
 
 [sub_resource type="Resource" id="Resource_ukyrk"]
 script = ExtResource("2_pu2lt")
+speed = 50
 metadata/_custom_type_script = "uid://dk01xqyffyyse"
 
 [sub_resource type="Resource" id="Resource_olqyp"]
@@ -108,7 +109,7 @@ animations = [{
 size = Vector2(16, 16)
 
 [node name="Player" type="CharacterBody2D" unique_id=564091004]
-scale = Vector2(0.9, 0.9)
+scale = Vector2(0.95, 0.95)
 script = ExtResource("1_vgqql")
 move = SubResource("Resource_ukyrk")
 stats = SubResource("Resource_olqyp")

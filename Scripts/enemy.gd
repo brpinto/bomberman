@@ -7,12 +7,13 @@ class_name Enemy
 signal dead(point: int)
 
 var raycast: RayCast2D
-var curr_dir = Vector2i.LEFT
+var curr_dir: Vector2 = Vector2.LEFT
 var bomb
 var can_move: bool
 var health: int
 var damage: int
 var point: int
+var speed: int = 20
 
 func _ready() -> void:
 	move.target = self
@@ -27,13 +28,14 @@ func _ready() -> void:
 
 	raycast = $RayCast2D
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	var free: Array = []
-	var enemy_pos = move.walls.local_to_map(self.global_position)
-	var cell_pos: Vector2i = enemy_pos + curr_dir
-
+	var enemy_pos = move.walls.map_to_local(move.walls.local_to_map(move.walls.to_local(self.global_position)))
+	enemy_pos = move.walls.local_to_map(enemy_pos)
+	var cell_pos: Vector2 = Vector2(enemy_pos.x, enemy_pos.y) + curr_dir
+	
 	raycast.target_position = curr_dir * 9
-
+#
 	if raycast.is_colliding():
 		var surroundings = move.walls.get_surrounding_cells(enemy_pos)
 		for cell in surroundings:
@@ -41,16 +43,17 @@ func _process(delta: float) -> void:
 				free.append(cell)
 
 	if free.size() > 0:
-		var new_dir = free[randi_range(0, free.size() - 1)]
-		curr_dir = new_dir - enemy_pos
-
-	if curr_dir == Vector2i.RIGHT:
+		var new_dir: Vector2 = free[randi_range(0, free.size() - 1)]
+		curr_dir = new_dir - Vector2(enemy_pos.x, enemy_pos.y)
+	
+	if curr_dir == Vector2.RIGHT:
 		$AnimatedSprite2D.flip_h = true
 	else:
 		$AnimatedSprite2D.flip_h = false
-	
+
 	if can_move:
-		move.move(delta, curr_dir)
+		velocity = curr_dir * speed
+		move_and_slide()
 
 	var map_pos = move.destructibles.local_to_map(self.global_position)
 	var tile_data = move.destructibles.get_cell_tile_data(map_pos)
