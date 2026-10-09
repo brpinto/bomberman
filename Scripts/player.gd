@@ -32,62 +32,46 @@ func _ready() -> void:
 	raycast = $RayCast2D
 
 func _physics_process(delta: float) -> void:
-	var direction := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	if direction == Vector2.LEFT:
-		$AnimatedSprite2D.flip_h = false
-		$AnimatedSprite2D.play("walk_side")
-	elif direction == Vector2.RIGHT:
-		$AnimatedSprite2D.flip_h = true
-		$AnimatedSprite2D.play("walk_side")
-	elif direction == Vector2.UP:
-		$AnimatedSprite2D.flip_h = true
-		$AnimatedSprite2D.play("walk_up")
-	elif direction == Vector2.DOWN:
-		$AnimatedSprite2D.flip_h = false
-		$AnimatedSprite2D.play("walk_down")
 	
-	velocity = direction * speed
-	move_and_slide()
-	#if not can_move:
-		#return
-#
-	#if Input.is_action_pressed("ui_left"):
-		#raycast.target_position = Vector2(-9, 0)
-		#move.move(delta, Vector2i.LEFT)
-#
-	#if Input.is_action_pressed("ui_right"):
-		#raycast.target_position = Vector2(9, 0)
-		#move.move(delta, Vector2i.RIGHT)
-#
-	#if Input.is_action_pressed("ui_down"):
-		#raycast.target_position = Vector2(0, 9)
-		#move.move(delta, Vector2i.DOWN)
-#
-	#if Input.is_action_pressed("ui_up"):
-		#raycast.target_position = Vector2(0, -9)
-		#move.move(delta, Vector2i.UP)
-#
-	#if Input.is_key_pressed(KEY_W):
-		#if can_put_bomb:
-			#put_bomb()
-			#can_put_bomb = false
+	if can_move:
+		var direction := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+		if direction == Vector2.LEFT:
+			$AnimatedSprite2D.flip_h = false
+			$AnimatedSprite2D.play("walk_side")
+		elif direction == Vector2.RIGHT:
+			$AnimatedSprite2D.flip_h = true
+			$AnimatedSprite2D.play("walk_side")
+		elif direction == Vector2.UP:
+			$AnimatedSprite2D.flip_h = true
+			$AnimatedSprite2D.play("walk_up")
+		elif direction == Vector2.DOWN:
+			$AnimatedSprite2D.flip_h = false
+			$AnimatedSprite2D.play("walk_down")
+	
+		velocity = direction * speed
+		move_and_slide()
+
+		$RayCast2D.target_position = direction * 9
+		if Input.is_key_pressed(KEY_W):
+			if can_put_bomb:
+				put_bomb()
+				can_put_bomb = false
 #
 	#var map_pos = move.destructibles.local_to_map(global_position)
 	#var tile_data = move.destructibles.get_cell_tile_data(map_pos)
 #
 	#if tile_data:
-		#
 		#if tile_data.get_custom_data("explosion"):
 			#take_damage(100)
 #
-	#if raycast.is_colliding():
-		#var collider = raycast.get_collider()
-		#if collider is Enemy:
-			#take_damage(collider.stats.damage)
+	if raycast.is_colliding():
+		var collider = raycast.get_collider()
+		if collider is Enemy:
+			take_damage(collider.stats.damage)
 
 func put_bomb():
 	var new_bomb = bomb_instance.instantiate()
-	new_bomb.global_position = self.global_position
+	new_bomb.global_position = move.walls.map_to_local(move.walls.local_to_map(self.global_position))
 	get_tree().current_scene.add_child(new_bomb)
 	new_bomb.exploded.connect(_on_explosion, CONNECT_ONE_SHOT)
 
@@ -95,10 +79,10 @@ func _on_explosion():
 	can_put_bomb = true
 
 func _on_death():
-	can_move = false
 	$AnimatedSprite2D.play("death")
 	await get_tree().create_timer(3.0).timeout
 	self.process_mode = Node.PROCESS_MODE_DISABLED
+	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 
 func take_damage(amount: int) -> void:
 	health -= amount
@@ -107,4 +91,3 @@ func take_damage(amount: int) -> void:
 
 func _on_enemy_death(point: int) -> void:
 	score += point
-	print(score)

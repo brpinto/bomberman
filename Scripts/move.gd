@@ -35,25 +35,3 @@ func is_walkable(cell_to_check: Vector2i) -> bool:
 		return false
 
 	return true
-
-func move(delta, direction: Vector2):
-	if direction == Vector2.LEFT:
-		animated_sprite.flip_h = false
-		animated_sprite.play("walk_side")
-	elif direction == Vector2.RIGHT:
-		animated_sprite.flip_h = true
-		animated_sprite.play("walk_side")
-	elif direction == Vector2.UP:
-		animated_sprite.flip_h = true
-		animated_sprite.play("walk_up")
-	elif direction == Vector2.DOWN:
-		animated_sprite.flip_h = false
-		animated_sprite.play("walk_down")
-
-	target.velocity = direction * speed
-	target.move_and_slide()
-	#var target_pos = walls.local_to_map(target.global_position)
-	#var cell_pos = target_pos + direction
-	#
-	#if not target.raycast.is_colliding():
-		#target.global_position += direction as Vector2 * delta * speed

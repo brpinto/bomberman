@@ -32,9 +32,9 @@ func _ready() -> void:
 func _on_explosion():
 	self.visible = false
 	var used_cells = destructibles.get_used_cells()
-	var pos = destructibles.local_to_map(global_position)
+	var pos = destructibles.local_to_map(destructibles.to_local(self.global_position))
 	var surrounding = destructibles.get_surrounding_cells(pos)
-	print(surrounding)
+
 	var rotation_index = 0
 	while rotation_index <= surrounding.size() - 1:
 		var data = destructibles.get_cell_tile_data(surrounding[rotation_index])
