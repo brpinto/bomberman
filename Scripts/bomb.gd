@@ -22,19 +22,13 @@ func _ready() -> void:
 	destructibles = get_tree().current_scene.get_node("Map/Destructibles")
 	damage = stats.damage
 	
-	#var player = get_tree().current_scene.get_node("Pausable/Player")
-	#var local_player_pos = destructibles.to_local(player.global_position)
-	#var map_pos = destructibles.local_to_map(local_player_pos)
-	#print(map_pos)
-	#global_position = player.global_position
 	$Timer.start()
 
 func _on_explosion():
 	self.visible = false
-	var used_cells = destructibles.get_used_cells()
 	var pos = destructibles.local_to_map(destructibles.to_local(self.global_position))
 	var surrounding = destructibles.get_surrounding_cells(pos)
-
+	
 	var rotation_index = 0
 	while rotation_index <= surrounding.size() - 1:
 		var data = destructibles.get_cell_tile_data(surrounding[rotation_index])

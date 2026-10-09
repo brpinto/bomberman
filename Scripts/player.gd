@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var bomb_instance = preload("res://Scenes/bomb.tscn")
 
 signal dead
+signal earned_points(score: int)
 
 var can_put_bomb: bool = true
 var raycast: RayCast2D
@@ -22,19 +23,18 @@ func _ready() -> void:
 	move.destructibles = get_tree().current_scene.get_node("Map/Destructibles")
 	
 	var enemies = get_tree().get_nodes_in_group("enemies")
-	
+	print(enemies.size())
 	for enemy in enemies:
 		enemy.dead.connect(_on_enemy_death, CONNECT_ONE_SHOT)
 	
 	health = stats.health
 	score = stats.score
-	
 	raycast = $RayCast2D
 
-func _physics_process(delta: float) -> void:
-	
-	if can_move:
-		var direction := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+func _physics_process(_delta: float) -> void:
+	var direction := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+
+	if not raycast.is_colliding() and can_move:
 		if direction == Vector2.LEFT:
 			$AnimatedSprite2D.flip_h = false
 			$AnimatedSprite2D.play("walk_side")
@@ -51,18 +51,18 @@ func _physics_process(delta: float) -> void:
 		velocity = direction * speed
 		move_and_slide()
 
-		$RayCast2D.target_position = direction * 9
-		if Input.is_key_pressed(KEY_W):
-			if can_put_bomb:
-				put_bomb()
-				can_put_bomb = false
-#
-	#var map_pos = move.destructibles.local_to_map(global_position)
-	#var tile_data = move.destructibles.get_cell_tile_data(map_pos)
-#
-	#if tile_data:
-		#if tile_data.get_custom_data("explosion"):
-			#take_damage(100)
+	$RayCast2D.target_position = direction * 9
+	if Input.is_key_pressed(KEY_W):
+		if can_put_bomb:
+			put_bomb()
+			can_put_bomb = false
+
+	var map_pos = move.destructibles.local_to_map(move.destructibles.to_local(global_position))
+	var tile_data = move.destructibles.get_cell_tile_data(map_pos)
+	
+	if tile_data:
+		if tile_data.get_custom_data("explosion"):
+			take_damage(100)
 #
 	if raycast.is_colliding():
 		var collider = raycast.get_collider()
@@ -79,9 +79,10 @@ func _on_explosion():
 	can_put_bomb = true
 
 func _on_death():
+	can_move = false
 	$AnimatedSprite2D.play("death")
-	await get_tree().create_timer(3.0).timeout
-	self.process_mode = Node.PROCESS_MODE_DISABLED
+	await get_tree().create_timer(2.5).timeout
+	
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 
 func take_damage(amount: int) -> void:
@@ -90,4 +91,5 @@ func take_damage(amount: int) -> void:
 		dead.emit()
 
 func _on_enemy_death(point: int) -> void:
-	score += point
+	stats.score += point
+	earned_points.emit(score)

@@ -105,8 +105,9 @@ animations = [{
 "speed": 16.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x3wgy"]
-size = Vector2(16, 16)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l6n3p"]
+radius = 6.3157897
+height = 16.0
 
 [node name="Player" type="CharacterBody2D" unique_id=564091004]
 scale = Vector2(0.95, 0.95)
@@ -120,7 +121,7 @@ animation = &"walk_up"
 autoplay = "walk_side"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1441773133]
-shape = SubResource("RectangleShape2D_x3wgy")
+shape = SubResource("CapsuleShape2D_l6n3p")
 
 [node name="RayCast2D" type="RayCast2D" parent="." unique_id=1297067744]
 target_position = Vector2(-9, 0)

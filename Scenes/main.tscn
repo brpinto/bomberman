@@ -59,4 +59,3 @@ move = SubResource("Resource_6bp64")
 shape = SubResource("RectangleShape2D_ig7tw")
 
 [node name="HUD" parent="." unique_id=673051817 instance=ExtResource("6_6bp64")]
-visible = false

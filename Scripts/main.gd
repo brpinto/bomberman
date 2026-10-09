@@ -15,7 +15,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func toggle_pause():
 	var tree = get_tree()
 	tree.paused = !tree.paused
-	
+
 	if tree.paused:
 		$Pausable/Control/Game.text = "Pause"
 	else:
